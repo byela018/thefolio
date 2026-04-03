@@ -54,7 +54,7 @@ router.put('/profile', protect, upload.single('profilePic'), async (req, res) =>
     const user = await User.findById(req.user._id);
     if (req.body.name) user.name = req.body.name;
     if (req.body.bio) user.bio = req.body.bio;
-    if (req.file) user.profilePic = req.file.filename;
+    if (req.file) user.profilePic = req.file.secure_url || req.file.path;
     await user.save();
     const updated = await User.findById(user._id).select('-password');
     res.json(updated);
@@ -81,6 +81,7 @@ router.get('/user/:id', async (req, res) => {
     res.json(user);
   } catch (err) { res.status(500).json({ message: err.message }); }
 });
+
 // POST /api/auth/forgot-password
 router.post('/forgot-password', async (req, res) => {
   try {
@@ -96,5 +97,4 @@ router.post('/forgot-password', async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
 module.exports = router;
