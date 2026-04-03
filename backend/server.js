@@ -18,7 +18,7 @@ connectDB();
 app.use(cors({
   origin: [
     'http://localhost:3000',
-    'process.env.FRONTEND_URL || 'http://localhost:3000',
+    'https://thefolio-lilac.vercel.app/',
   ],
   credentials: true,
 }));
