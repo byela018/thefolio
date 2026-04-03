@@ -48,18 +48,27 @@ router.get('/me', protect, async (req, res) => {
   res.json(user);
 });
 
-// PUT /api/auth/profile
+/// PUT /api/auth/profile
 router.put('/profile', protect, upload.single('profilePic'), async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
+
     if (req.body.name) user.name = req.body.name;
     if (req.body.bio) user.bio = req.body.bio;
-    if (req.file) user.profilePic = req.file.secure_url || req.file.path;
+
+    // Cloudinary returns secure_url, multer-storage-cloudinary sets req.file.path
+    if (req.file) {
+      user.profilePic = req.file.secure_url || req.file.path;
+    }
+
     await user.save();
     const updated = await User.findById(user._id).select('-password');
     res.json(updated);
-  } catch (err) { res.status(500).json({ message: err.message }); }
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 });
+
 
 // PUT /api/auth/change-password
 router.put('/change-password', protect, async (req, res) => {

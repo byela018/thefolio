@@ -28,13 +28,15 @@ router.get('/:id', async (req, res) => {
 // POST /api/posts — Member/Admin: create post
 router.post('/', protect, memberOrAdmin, upload.single('image'), async (req, res) => {
   try {
-    console.log('File info:', req.file); // ADD THIS
     const { title, body } = req.body;
+    // Cloudinary returns secure_url, multer-storage-cloudinary sets req.file.path
     const image = req.file ? req.file.secure_url || req.file.path : '';
     const post = await Post.create({ title, body, image, author: req.user._id });
     await post.populate('author', 'name profilePic');
     res.status(201).json(post);
-  } catch (err) { res.status(500).json({ message: err.message }); }
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 });
 
 // PUT /api/posts/:id — Edit: owner or admin
@@ -42,7 +44,7 @@ router.put('/:id', protect, memberOrAdmin, upload.single('image'), async (req, r
   try {
     const post = await Post.findById(req.params.id);
     if (!post) return res.status(404).json({ message: 'Post not found' });
-    const image = req.file ? (req.file.secure_url || req.file.path) : '';
+
     const isOwner = post.author.toString() === req.user._id.toString();
     const isAdmin = req.user.role === 'admin';
     if (!isOwner && !isAdmin) return res.status(403).json({ message: 'Not authorized' });
@@ -50,10 +52,14 @@ router.put('/:id', protect, memberOrAdmin, upload.single('image'), async (req, r
     if (req.body.title) post.title = req.body.title;
     if (req.body.body) post.body = req.body.body;
     if (req.file) post.image = req.file.secure_url || req.file.path;
+
     await post.save();
     res.json(post);
-  } catch (err) { res.status(500).json({ message: err.message }); }
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 });
+
 
 // DELETE /api/posts/:id — Delete: owner or admin
 router.delete('/:id', protect, memberOrAdmin, async (req, res) => {

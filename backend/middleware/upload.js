@@ -1,30 +1,25 @@
-const cloudinary = require('cloudinary').v2;
-const multer = require('multer');
+// backend/middleware/upload.js
+const { v2: cloudinary } = require('cloudinary');
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const multer = require('multer');
 
+// Cloudinary config gamit ang environment variables
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-console.log('Cloudinary config:', {
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY ? 'SET' : 'NOT SET',
-  api_secret: process.env.CLOUDINARY_API_SECRET ? 'SET' : 'NOT SET',
-});
-
+// Setup ng storage para sa Cloudinary
 const storage = new CloudinaryStorage({
-  cloudinary: cloudinary,
-  params: async (req, file) => {
-    return {
-      folder: 'thefolio',
-      allowed_formats: ['jpg', 'jpeg', 'png', 'gif', 'webp'],
-      public_id: Date.now() + '-' + file.originalname,
-    };
+  cloudinary,
+  params: {
+    folder: 'thefolio_uploads', // pangalan ng folder sa Cloudinary
+    allowed_formats: ['jpg', 'png', 'jpeg'],
   },
 });
 
-const upload = multer({ storage: storage });
+// Multer instance gamit ang Cloudinary storage
+const upload = multer({ storage });
 
 module.exports = upload;
