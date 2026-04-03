@@ -7,6 +7,7 @@ import API from '../api/axios';
 import { useAuth } from '../context/AuthContext';
 import Modal from '../components/Modal';
 
+
 const ProfilePage = () => {
   useEffect(() => {
     DarkMode();
@@ -51,7 +52,7 @@ const ProfilePage = () => {
 };
 
   const picSrc = user?.profilePic
-    ? `http://localhost:5000/uploads/${user.profilePic}`
+    ? `${user.profilePic}`
     : null;
 
   return (

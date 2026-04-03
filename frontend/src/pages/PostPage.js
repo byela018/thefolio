@@ -8,6 +8,7 @@ import API from '../api/axios';
 import { useAuth } from '../context/AuthContext';
 import Modal from '../components/Modal';
 
+
 const PostPage = () => {
   useEffect(() => {
     DarkMode();
@@ -101,7 +102,6 @@ const PostPage = () => {
   }
   };
 
-
   return (
     <>
       <Header />
@@ -122,7 +122,7 @@ const PostPage = () => {
           <section id="post-container">
             {post.image && (
               <img
-                src={`http://localhost:5000/uploads/${post.image}`}
+                src={post.image}
                 alt={post.title}
                 className="post-image"
               />
@@ -133,7 +133,7 @@ const PostPage = () => {
             <div className="post-meta">
               {post.author?.profilePic ? (
                 <img
-                  src={`http://localhost:5000/uploads/${post.author.profilePic}`}
+                  src={post.author.profilePic}
                   alt={post.author?.name}
                   className="post-author-pic"
                 />
@@ -152,7 +152,7 @@ const PostPage = () => {
               <span> · {new Date(post.createdAt).toLocaleDateString()}</span>
             </div>
 
-                        <div className="post-content">
+            <div className="post-content">
               <p>{post.body}</p>
               {user ? (
                 <button
@@ -194,7 +194,7 @@ const PostPage = () => {
                   <div className="comment-author">
                     {comment.author?.profilePic ? (
                       <img
-                        src={`http://localhost:5000/uploads/${comment.author.profilePic}`}
+                        src={comment.author.profilePic}
                         alt={comment.author?.name}
                         className="comment-author-pic"
                       />
@@ -257,7 +257,7 @@ const PostPage = () => {
                           <div className="comment-author">
                             {reply.author?.profilePic ? (
                               <img
-                                src={`http://localhost:5000/uploads/${reply.author.profilePic}`}
+                                src={reply.author.profilePic}
                                 alt={reply.author?.name}
                                 className="comment-author-pic"
                               />

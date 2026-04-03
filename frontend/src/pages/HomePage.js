@@ -25,17 +25,18 @@ const [deleteId, setDeleteId] = useState(null);
       .catch(err => console.error(err));
   }, []);
 
-const handleDeletePost = async () => {
-    try {
-      await API.delete(`/posts/${deleteId}`);
-      setPosts(posts.filter(p => p._id !== deleteId));
-      setDeleteId(null);
-      setModal({ show: true, message: 'Post deleted successfully! ✅', type: 'success' });
-    } catch (err) {
-      setModal({ show: true, message: 'Failed to delete post.', type: 'error' });
-    }
-};
- const handleLike = async (postId) => {
+  const handleDeletePost = async () => {
+      try {
+        await API.delete(`/posts/${deleteId}`);
+        setPosts(posts.filter(p => p._id !== deleteId));
+        setDeleteId(null);
+        setModal({ show: true, message: 'Post deleted successfully! ✅', type: 'success' });
+      } catch (err) {
+        setModal({ show: true, message: 'Failed to delete post.', type: 'error' });
+      }
+  };
+
+    const handleLike = async (postId) => {
       if (!user) return;
       try {
         const res = await API.put(`/posts/${postId}/like`);
@@ -46,7 +47,6 @@ const handleDeletePost = async () => {
         console.error(err);
       }
     };
-
   return (
     <>
       <Header />
@@ -163,7 +163,7 @@ const handleDeletePost = async () => {
               <div className="post-card" key={post._id}>
                 {post.image && (
                   <img
-                    src={`http://localhost:5000/uploads/${post.image}`}
+                    src={post.image}
                     alt={post.title}
                     className="post-card-image"
                   />
@@ -173,7 +173,7 @@ const handleDeletePost = async () => {
                   <div className="post-meta">
                     {post.author?.profilePic ? (
                       <img
-                        src={`http://localhost:5000/uploads/${post.author.profilePic}`}
+                        src={post.author.profilePic}
                         alt={post.author?.name}
                         className="post-author-pic"
                       />
@@ -219,7 +219,8 @@ const handleDeletePost = async () => {
           </div>
         )}
       </section>
-        {user && (
+
+      {user && (
         <button
           className="fab-btn"
           onClick={() => navigate('/create-post')}
@@ -228,6 +229,7 @@ const handleDeletePost = async () => {
           +
         </button>
       )}
+
       <Footer />
     </>
   );

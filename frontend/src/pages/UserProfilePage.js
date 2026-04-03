@@ -6,6 +6,7 @@ import "../App.css";
 import { DarkMode } from "../components/DarkMode";
 import API from '../api/axios';
 
+
 const UserProfilePage = () => {
   useEffect(() => {
     DarkMode();
@@ -40,7 +41,7 @@ const UserProfilePage = () => {
             <div style={{ textAlign: 'center', marginBottom: '20px' }}>
               {profile.profilePic ? (
                 <img
-                  src={`http://localhost:5000/uploads/${profile.profilePic}`}
+                  src={profile.profilePic}
                   alt={profile.name}
                   style={{ width: '100px', height: '100px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #CD2C58' }}
                 />
@@ -80,7 +81,7 @@ const UserProfilePage = () => {
                   <div className="post-card" key={post._id}>
                     {post.image && (
                       <img
-                        src={`http://localhost:5000/uploads/${post.image}`}
+                        src={profile.profilePic}
                         alt={post.title}
                         className="post-card-image"
                       />
