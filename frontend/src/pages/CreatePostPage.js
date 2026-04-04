@@ -81,16 +81,12 @@ const CreatePostPage = () => {
             required
           ></textarea>
 
-          {user?.role === 'admin' && (
-            <>
-              <label>Cover Image:</label>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={e => setImage(e.target.files[0])}
-              />
-            </>
-          )}
+          <label>Cover Image:</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={e => setImage(e.target.files[0])}
+          />
 
           {error && <span className="error-msg">{error}</span>}
 
