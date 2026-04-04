@@ -25,6 +25,11 @@ app.use(cors({
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+// Health check route para sa root
+app.get('/', (req, res) => {
+  res.send('TheFolio API is live!');
+});
+
 app.use('/api/auth', authRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/comments', commentRoutes);
