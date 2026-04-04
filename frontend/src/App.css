@@ -2284,3 +2284,13 @@ body.dark-mode .admin-section h3{
     transform: translateY(-3px);
     background-color: #E06B80;
 }
+
+#create-post-container input,
+#create-post-container textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    font-size: 16px;
+}
