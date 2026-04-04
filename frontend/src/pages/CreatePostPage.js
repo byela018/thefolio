@@ -83,7 +83,7 @@ const CreatePostPage = () => {
 
           {user?.role === 'admin' && (
             <>
-              <label>Cover Image (Admin only):</label>
+              <label>Cover Image:</label>
               <input
                 type="file"
                 accept="image/*"
