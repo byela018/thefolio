@@ -206,16 +206,7 @@ const [deleteId, setDeleteId] = useState(null);
                       ) : (
                         <span className="like-count">❤️ {post.likes?.length || 0}</span>
                       )}
-
-                      <span className="comment-count">💬 {post.comments?.length || 0}</span>
-
-                      {user && (user._id === post.author?._id || user.id === post.author?._id || user.role === 'admin') && (
-                        <>
-                          <button className="edit-btn" onClick={() => navigate(`/edit-post/${post._id}`)}>Edit</button>
-                          <button className="delete-btn" onClick={() => setDeleteId(post._id)}>Delete</button>
-                        </>
-                      )}
-
+                      
                     {user && (user._id === post.author?._id || user.id === post.author?._id || user.role === 'admin') && (
                       <>
                         <button className="edit-btn" onClick={() => navigate(`/edit-post/${post._id}`)}>Edit</button>

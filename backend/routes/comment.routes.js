@@ -3,26 +3,6 @@ const Comment = require('../models/Comment');
 const { protect } = require('../middleware/auth.middleware');
 const { memberOrAdmin } = require('../middleware/role.middleware');
 const router = express.Router();
-const Post = require('../models/Post');
-
-// POST /api/comments/:postId
-router.post('/:postId', protect, memberOrAdmin, async (req, res) => {
-  try {
-    const comment = await Comment.create({
-      post: req.params.postId,
-      author: req.user._id,
-      body: req.body.body,
-      parentComment: req.body.parentComment || null,
-    });
-
-    await Post.findByIdAndUpdate(req.params.postId, {
-      $push: { comments: comment._id }
-    });
-
-    await comment.populate('author', 'name profilePic');
-    res.status(201).json(comment);
-  } catch (err) { res.status(500).json({ message: err.message }); }
-});
 
 
 // GET /api/comments/:postId — Public: all comments for a post
