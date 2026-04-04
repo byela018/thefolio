@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 import "../App.css";
 import { DarkMode } from "../components/DarkMode";
 import API from '../api/axios';
-import { useAuth } from '../context/AuthContext';
+//import { useAuth } from '../context/AuthContext';
 import Modal from '../components/Modal';
 
 const CreatePostPage = () => {
