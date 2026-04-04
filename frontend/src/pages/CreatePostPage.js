@@ -15,7 +15,7 @@ const CreatePostPage = () => {
 
     const [modal, setModal] = useState({ show: false, message: '', type: '' });
   const navigate = useNavigate();
-  const { user } = useAuth();
+  //const { user } = useAuth();
 
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
