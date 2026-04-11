@@ -27,7 +27,11 @@ const Header = () => {
           <nav className="nav-flex">
             <NavLink to="/" className={({ isActive }) => (isActive ? "active" : "")}>Home</NavLink>
             <NavLink to="/about" className={({ isActive }) => (isActive ? "active" : "")}>About</NavLink>
-            <NavLink to="/contact" className={({ isActive }) => (isActive ? "active" : "")}>Contact</NavLink>
+
+            {/* Show Contact only if user is not admin */}
+            {(!user || user.role !== 'admin') && (
+              <NavLink to="/contact" className={({ isActive }) => (isActive ? "active" : "")}>Contact</NavLink>
+            )}
 
             {!user ? (
               <>
